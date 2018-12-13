@@ -274,8 +274,18 @@ class Server(object):
                 if os.getenv(key)
             }
         else:
-            # OSX and Linux users are left to fend for themselves.
-            environ = os.environ.copy()
+            # Linux and darwin (and others)
+            # This hack will filter out all paths not starting with
+            # PYPE_SETUP_ROOT. This allows pyblish-qml run from environments
+            # where PYTHONPATH include incompatible things breaking python.
+            environ = {}
+            filtered = []
+            [filtered.append(p)
+             for p in os.getenv('PYTHONPATH').split(os.pathsep)
+             if p.startswith(os.getenv('PYPE_SETUP_ROOT'))]
+
+            environ['PYTHONPATH'] = os.pathsep.join(filtered)
+            environ['DISPLAY'] = os.getenv('DISPLAY')
 
         # Append PyQt5 to existing PYTHONPATH, if available
         environ["PYTHONPATH"] = os.pathsep.join(
