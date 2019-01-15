@@ -134,19 +134,22 @@ class Server(object):
             # PYPE_SETUP_ROOT. This allows pyblish-qml run from environments
             # where PYTHONPATH include incompatible things breaking python.
             environ = {}
-            filtered = []
-            [filtered.append(p)
-             for p in os.getenv('PYTHONPATH').split(os.pathsep)
-             if p.startswith(os.getenv('PYPE_SETUP_ROOT'))]
-
-            environ['PYTHONPATH'] = os.pathsep.join(filtered)
             environ['DISPLAY'] = os.getenv('DISPLAY')
 
+        filtered = []
+        [filtered.append(p)
+         for p in os.getenv('PYTHONPATH').split(os.pathsep)
+         if os.path.normpath(p).startswith(os.path.normpath(os.getenv('PYPE_SETUP_ROOT')))]
+
+        environ['PYTHONPATH'] = os.pathsep.join(filtered)
         # Append PyQt5 to existing PYTHONPATH, if available
-        environ["PYTHONPATH"] = os.pathsep.join(
-            path for path in [os.getenv("PYTHONPATH"), pyqt5]
-            if path is not None
-        )
+        #environ["PYTHONPATH"] = os.pathsep.join(
+        #    path for path in [os.getenv("PYTHONPATH"), pyqt5]
+        #    if path is not None
+        #)
+
+         if pyqt5 is not None:
+            environ["PYTHONPATH"] = os.pathsep.join(pyqt5)
 
         # Protect against an erroneous parent environment
         # The environment passed to subprocess is inherited from
