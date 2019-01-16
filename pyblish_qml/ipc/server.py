@@ -143,12 +143,12 @@ class Server(object):
 
         environ['PYTHONPATH'] = os.pathsep.join(filtered)
         # Append PyQt5 to existing PYTHONPATH, if available
-        #environ["PYTHONPATH"] = os.pathsep.join(
+        # environ["PYTHONPATH"] = os.pathsep.join(
         #    path for path in [os.getenv("PYTHONPATH"), pyqt5]
         #    if path is not None
-        #)
+        # )
 
-         if pyqt5 is not None:
+        if pyqt5 is not None:
             environ["PYTHONPATH"] = os.pathsep.join(pyqt5)
 
         # Protect against an erroneous parent environment
