@@ -139,7 +139,8 @@ class Server(object):
         filtered = []
         [filtered.append(p)
          for p in os.getenv('PYTHONPATH').split(os.pathsep)
-         if os.path.normpath(p).startswith(os.path.normpath(os.getenv('PYPE_SETUP_ROOT')))]
+         if os.path.normpath(p).startswith(
+         os.path.normpath(os.getenv('PYPE_SETUP_ROOT')))]
 
         environ['PYTHONPATH'] = os.pathsep.join(filtered)
         # Append PyQt5 to existing PYTHONPATH, if available
@@ -149,7 +150,9 @@ class Server(object):
         # )
 
         if pyqt5 is not None:
-            environ["PYTHONPATH"] = os.pathsep.join(pyqt5)
+            environ["PYTHONPATH"] = os.pathsep.join(
+                [environ["PYTHONPATH"], pyqt5]
+            )
 
         # Protect against an erroneous parent environment
         # The environment passed to subprocess is inherited from
