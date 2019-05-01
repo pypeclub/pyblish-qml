@@ -120,7 +120,7 @@ class Server(object):
 
         # Maintain the absolute minimum of environment variables,
         # to avoid issues on invalid types.
-<<<<<<< HEAD
+
         if IS_WIN32:
             environ = {
                 key: os.getenv(key)
@@ -145,20 +145,6 @@ class Server(object):
          os.path.normpath(os.getenv('PYPE_SETUP_ROOT')))]
 
         environ['PYTHONPATH'] = os.pathsep.join(filtered)
-=======
-        environ = {
-            key: os.getenv(key)
-            for key in ("USERNAME",
-                        "SYSTEMROOT",
-                        "PYTHONPATH",
-                        "PATH",
-
-                        # Linux
-                        "DISPLAY")
-            if os.getenv(key)
-        }
-
->>>>>>> upstream/master
         # Append PyQt5 to existing PYTHONPATH, if available
         # environ["PYTHONPATH"] = os.pathsep.join(
         #    path for path in [os.getenv("PYTHONPATH"), pyqt5]
